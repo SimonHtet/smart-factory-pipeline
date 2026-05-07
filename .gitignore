@@ -1,5 +1,16 @@
+# Environment
 .env
+pipeline/.env
+
+# Python
 __pycache__/
 *.pyc
 *.pyo
+
+# Power BI temp files
+*.pbix.bak
+~*.pbix
+
+# OS
 .DS_Store
+Thumbs.db
