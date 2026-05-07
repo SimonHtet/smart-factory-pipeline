@@ -12,11 +12,13 @@ Weekly summary of Efficiency, Waste%, and Yield — actual vs. target — per ma
 | KPI | Group M | M1 | M2 | M3 |
 |---|---|---|---|---|
 | Efficiency (Actual) | 96.90% | 95.89% | 98.06% | 96.76% |
-| Efficiency (Target) | 93.22% | — | — | — |
+| Efficiency (Target) | 93.22% | 93.22% | 93.22% | 93.22% |
 | Waste% (Actual) | 0.62% | 0.95% 🔴 | 0.66% 🔴 | 0.25% |
-| Waste% (Target) | 0.65% | — | — | — |
+| Waste% (Target) | 0.65% | 0.65% | 0.65% | 0.65% |
 | Yield (Actual) | 98.98% | — | — | — |
 | Yield (Target) | 98.56% | — | — | — |
+
+> **Note on Yield:** Yield is tracked at Group M level only. The preparation department sends a single batch quantity to the filling section — M1, M2, M3 share that batch. Yield variance is therefore a group metric, not per-machine.
 
 ![KPI Scorecard](screenshots/kpi-scorecard.png)
 
@@ -25,9 +27,9 @@ Weekly summary of Efficiency, Waste%, and Yield — actual vs. target — per ma
 ### Hourly Machine Performance
 Three line charts filtered by date and machine, showing intra-shift trends across hours 0–8:
 
-- **Average Briks Amount by Hour** — output volume per machine per hour (M1/M2/M3 at ~48K briks/hour peak, dropping toward end of shift)
-- **Average FillMinute by Hour** — machine fill time in minutes; M2 flat at 120min, M1 dipped to 103min at hour 2 indicating a slowdown event
-- **Efficiency of Machine (2-hour gap)** — efficiency % recalculated every 2 hours; all 3 machines start at 90–100% and trend down to 40–50% by hour 8
+- **Average Briks Amount by Hour** — output volume per machine per hour (M1/M2/M3 peaking at ~48K briks/hour); later hours show less data as the shift is still in progress, not a performance drop
+- **Average FillMinute by Hour** — machine fill time in minutes; M2 flat at 120min, M1 dipped to 103min at hour 2 then recovered, M3 flat at 120min
+- **Efficiency of Machine (2-hour gap)** — efficiency % recalculated every 2 hours; data toward the right reflects an ongoing shift with fewer completed cycles, not a decline in machine performance
 
 ![Hourly Machine Performance](screenshots/hourly-machine-performance.png)
 
