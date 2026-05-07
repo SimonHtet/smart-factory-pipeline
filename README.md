@@ -173,9 +173,9 @@ except Exception as e:
 
 ## Project Status
 
-- **M1 handling** is currently used as a testing guard in the main process loop (`if machine == 'M1'`) while full multi-machine routing is validated.
-- `tbd` group (E1, J1) — end signal behavior under investigation; handlers will be added to `config.py` once confirmed.
-- SQL directory reserved for reference trigger definitions and migration DDL.
+- **Active** — polling all machines in `step14_cip` and `step13` groups; routing driven by `MACHINE_GROUPS` in `config.py`
+- `tbd` group (E1, J1) — end signal behavior under investigation; will be added to `config.py` once confirmed
+- SQL directory reserved for reference trigger definitions and migration DDL
 
 ---
 
