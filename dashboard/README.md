@@ -1,30 +1,51 @@
 # Dashboard
 
-Power BI KPI dashboard for monitoring production performance across 3 dairy manufacturing plants (23 Tetra Pak filler machines). Reviewed weekly at director level.
+Power BI KPI dashboard for monitoring production performance across Group M machines (M1, M2, M3) at DairyPlus Co., Ltd. Reviewed weekly at director level.
 
 ---
 
 ## Dashboard Pages
 
-### Machine Efficiency
-Tracks **finished goods output per TBA running hour** per machine — the core throughput KPI used to compare machine performance across plants and shifts.
+### KPI Scorecard
+Weekly summary of Efficiency, Waste%, and Yield — actual vs. target — per machine and group aggregate. Color coded: **green** = on or below target, **red** = over target.
 
-![Machine Efficiency](screenshots/efficiency-per-machine.png)
+| KPI | Group M | M1 | M2 | M3 |
+|---|---|---|---|---|
+| Efficiency (Actual) | 96.90% | 95.89% | 98.06% | 96.76% |
+| Efficiency (Target) | 93.22% | — | — | — |
+| Waste% (Actual) | 0.62% | 0.95% 🔴 | 0.66% 🔴 | 0.25% |
+| Waste% (Target) | 0.65% | — | — | — |
+| Yield (Actual) | 98.98% | — | — | — |
+| Yield (Target) | 98.56% | — | — | — |
 
-### Yield per Batch
-Monitors **actual yield against expected yield per production batch**, flagging batches that fall below threshold for root cause review.
+![KPI Scorecard](screenshots/kpi-scorecard.png)
 
-![Yield per Batch](screenshots/yield-per-batch.png)
+---
 
-### Waste Analysis
-Breakdown of **waste volume and waste category** across machines and time periods — used to identify recurring loss patterns and prioritize process improvements.
+### Hourly Machine Performance
+Three line charts filtered by date and machine, showing intra-shift trends across hours 0–8:
 
-![Waste Analysis](screenshots/waste-analysis.png)
+- **Average Briks Amount by Hour** — output volume per machine per hour (M1/M2/M3 at ~48K briks/hour peak, dropping toward end of shift)
+- **Average FillMinute by Hour** — machine fill time in minutes; M2 flat at 120min, M1 dipped to 103min at hour 2 indicating a slowdown event
+- **Efficiency of Machine (2-hour gap)** — efficiency % recalculated every 2 hours; all 3 machines start at 90–100% and trend down to 40–50% by hour 8
 
-### Waste Percentage
-**Waste as a percentage of total production** — trended over time per machine and plant. Threshold alerts highlight machines exceeding acceptable waste rates.
+![Hourly Machine Performance](screenshots/hourly-machine-performance.png)
 
-![Waste Percentage](screenshots/waste-percentage.png)
+---
+
+### Total Briks by Product
+Clustered bar chart showing production volume per product run (Product_ID format: `YYMMDD-Line-Machine`). Four metrics tracked per run:
+
+| Metric | Description |
+|---|---|
+| `Scanned_Var_Brik` | Briks counted at scanner |
+| `in_feed_mc` | Infeed counter from machine |
+| `out_feed_mc` | Outfeed counter from machine |
+| `FG Amount` | Finished goods confirmed |
+
+Comparing these four values per batch surfaces discrepancies between machine counters and actual FG output — used for yield variance and waste root cause analysis.
+
+![Total Briks by Product](screenshots/total-briks-by-product.png)
 
 ---
 
@@ -32,23 +53,22 @@ Breakdown of **waste volume and waste category** across machines and time period
 
 | Source | Description |
 |--------|-------------|
-| `T_M_Filler_Process` | Live PLC machine state — step number, running signals, counters |
+| `T_M_Filler_Process` | Live PLC machine state — step number, fill minutes, running signals |
 | `Change paper brik` | Paper roll change events with splice times and feed counter snapshots |
-| `Change strip` | Strip change events |
-| Production batch tables | Batch records with planned vs. actual yield |
+| Production batch tables | Product_ID, planned vs. actual yield, FG amount |
 
-Data is pulled directly from the factory SQL Server database via DirectQuery / scheduled refresh.
+Data pulled directly from the factory SQL Server database.
 
 ---
 
 ## Key DAX Measures
 
 ```
-Machine Efficiency = DIVIDE([Total FG Output (L)], [Total TBA Running Hours])
+Machine Efficiency = DIVIDE([Total FG Output], [Total TBA Running Hours])
 
-Waste % = DIVIDE([Total Waste (L)], [Total Production (L)], 0)
+Waste %            = DIVIDE([Total Waste], [Total Production], 0)
 
-Yield Variance = [Actual Yield] - [Expected Yield]
+Yield Variance     = [Actual Yield] - [Expected Yield]
 ```
 
 ---
@@ -58,5 +78,7 @@ Yield Variance = [Actual Yield] - [Expected Yield]
 | File | Description |
 |------|-------------|
 | `pbix/manufacturing-kpi-dashboard.pbix` | Main Power BI report file |
+| `screenshots/kpi-scorecard.png` | Weekly KPI scorecard — efficiency, waste%, yield vs. target |
+| `screenshots/hourly-machine-performance.png` | Hourly briks, fill minutes, efficiency trend |
+| `screenshots/total-briks-by-product.png` | Briks breakdown by product run (scanned, infeed, outfeed, FG) |
 | `sql/` | Source queries used in the data model |
-| `screenshots/` | Dashboard page screenshots |
