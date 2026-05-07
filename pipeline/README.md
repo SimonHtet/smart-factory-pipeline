@@ -61,7 +61,7 @@ Machines are grouped by how they signal end-of-batch. This is encoded in `config
 
 | Group | Machines | End Signal |
 |-------|----------|------------|
-| `step14_cip` | A1, A4, A5, B1, B2, D1, D2, D3 | Step 14 + `Signal_Final_CIP = 1` |
+| `step14_cip` | A1, A4, A5, B1, B2, D1, D2, D3, M1, M2, M3 | Step 14 + `Signal_Final_CIP = 1` |
 | `step13` | F1, F2, F3, F4, G1, G2, G3, H1, H2, H3, K1, K2 | Step 13 transition |
 | `tbd` | E1, J1 | Under investigation |
 
